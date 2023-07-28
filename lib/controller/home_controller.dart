@@ -11,19 +11,23 @@ class HomeController extends GetxController {
   }
 
   Future<void> getRequest() async {
+    print("Method called");
     Dio dio = Dio();
+    print("Dio called");
 
     try {
       var response =
           await dio.get("https://jsonplaceholder.typicode.com/posts");
 
-      if (response == 200) {
+      if (response.statusCode == 200) {
         print("HTTP Url: ${response.requestOptions.method}");
         print("HTTP Url: ${response.requestOptions.baseUrl}");
         print("HTTP Url: ${response.requestOptions.path}");
         print("HTTP Status code : ${response.statusCode}");
         print("HTTP Status Meggage : ${response.statusMessage}");
-        var myData = response.data as List;
+        //var myData = response.data as List;
+      } else {
+        print("errorrrrrrrrrrrrr");
       }
     } catch (e) {
       print(e);
