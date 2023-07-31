@@ -127,16 +127,15 @@ class HomeScreen extends StatelessWidget {
                             WeatherInfoCard(
                               title: "Wind",
                               image: "assets/windy.png",
-                              metter: homeController
-                                  .locationDataModel.value.current!.windDegree
-                                  .toString(),
+                              metter:
+                                  "${homeController.locationDataModel.value.current!.windKph} %",
                             ),
                             const SizedBox(height: 10),
                             WeatherInfoCard(
                               title: "Hum",
                               image: "assets/hum.png",
                               metter:
-                                  "${homeController.locationDataModel.value.current!.windDegree} %",
+                                  "${homeController.locationDataModel.value.current!.humidity} %",
                             ),
                           ],
                         ),

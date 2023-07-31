@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:weather_app/view/detials/details_screen.dart';
 import 'package:weather_app/view/home/home_screen.dart';
 
 void main() {
@@ -20,7 +21,7 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
           fontFamily: GoogleFonts.overpass().fontFamily),
-      home: const HomeScreen(),
+      home: HomeScreen(),
     );
   }
 }

@@ -68,37 +68,41 @@ class DetailsScreen extends StatelessWidget {
           child: Column(
             children: [
               // **********************************************
-              const Padding(
-                padding: EdgeInsets.all(20.0),
+              Padding(
+                padding: const EdgeInsets.all(20.0),
                 child: SizedBox(
-                  //  height: 40,
                   width: double.infinity,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Row(
-                        children: [
-                          Icon(
-                            Icons.arrow_back_ios,
-                            color: Colors.white,
-                            size: 16,
-                          ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Text(
-                            "Back",
-                            style: TextStyle(
-                              fontSize: 22,
+                      InkWell(
+                        onTap: () {
+                          Navigator.pop(context);
+                        },
+                        child: const Row(
+                          children: [
+                            Icon(
+                              Icons.arrow_back_ios,
                               color: Colors.white,
-                              fontWeight: FontWeight.bold,
+                              size: 16,
                             ),
-                          )
-                        ],
+                            SizedBox(
+                              width: 5,
+                            ),
+                            Text(
+                              "Back",
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            )
+                          ],
+                        ),
                       ),
-                      Spacer(),
-                      Icon(
+                      const Spacer(),
+                      const Icon(
                         Icons.settings,
                         color: Colors.white,
                       )
