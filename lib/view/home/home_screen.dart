@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:weather_app/controller/home_controller.dart';
+import 'package:weather_app/view/detials/details_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -40,8 +41,7 @@ class HomeScreen extends StatelessWidget {
                           Image.asset("assets/map.png", height: 30),
                           const SizedBox(width: 5),
                           Text(
-                            homeController
-                                .locationDataModel.value.location!.name
+                            homeController.weatherDataModel.value.location!.name
                                 .toString(),
                             style: const TextStyle(
                                 fontSize: 24, color: Colors.white),
@@ -63,81 +63,91 @@ class HomeScreen extends StatelessWidget {
                       const SizedBox(height: 40),
 
                       //*************************************** Weather Info************************** */
-                      Container(
-                        margin: const EdgeInsets.symmetric(horizontal: 20),
-                        padding: const EdgeInsets.symmetric(vertical: 16),
-                        //height: size.height,
-                        width: size.width,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          color: const Color(0xff80C4F4),
-                          border: Border.all(
-                            color: const Color(0xffFFFFFF),
-                            width: 2,
+                      InkWell(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => DetailsScreen(),
+                              ));
+                        },
+                        child: Container(
+                          margin: const EdgeInsets.symmetric(horizontal: 20),
+                          padding: const EdgeInsets.symmetric(vertical: 16),
+                          //height: size.height,
+                          width: size.width,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            color: const Color(0xff80C4F4),
+                            border: Border.all(
+                              color: const Color(0xffFFFFFF),
+                              width: 2,
+                            ),
                           ),
-                        ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Text(
-                              homeController.formatDate(homeController
-                                  .locationDataModel.value.location!.localtime),
-                              style: const TextStyle(
-                                fontSize: 18,
-                                color: Colors.white,
-                              ),
-                            ),
-                            const SizedBox(height: 20),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  homeController
-                                      .locationDataModel.value.current!.tempC
-                                      .toString(),
-                                  style: const TextStyle(
-                                    fontSize: 50,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white,
-                                  ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text(
+                                homeController.formatDate(homeController
+                                    .weatherDataModel.value.location!.localtime
+                                    .toString()),
+                                style: const TextStyle(
+                                  fontSize: 18,
+                                  color: Colors.white,
                                 ),
-                                const Text(
-                                  "o",
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white,
-                                  ),
-                                )
-                              ],
-                            ),
-                            Text(
-                              homeController.locationDataModel.value.current!
-                                  .condition.text
-                                  .toString(),
-                              style: const TextStyle(
-                                fontSize: 24,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
                               ),
-                            ),
-                            const SizedBox(height: 20),
-                            WeatherInfoCard(
-                              title: "Wind",
-                              image: "assets/windy.png",
-                              metter:
-                                  "${homeController.locationDataModel.value.current!.windKph} %",
-                            ),
-                            const SizedBox(height: 10),
-                            WeatherInfoCard(
-                              title: "Hum",
-                              image: "assets/hum.png",
-                              metter:
-                                  "${homeController.locationDataModel.value.current!.humidity} %",
-                            ),
-                          ],
+                              const SizedBox(height: 20),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    homeController
+                                        .weatherDataModel.value.current!.tempC
+                                        .toString(),
+                                    style: const TextStyle(
+                                      fontSize: 50,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                  const Text(
+                                    "o",
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white,
+                                    ),
+                                  )
+                                ],
+                              ),
+                              Text(
+                                homeController.weatherDataModel.value.current!
+                                    .condition.text
+                                    .toString(),
+                                style: const TextStyle(
+                                  fontSize: 24,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white,
+                                ),
+                              ),
+                              const SizedBox(height: 20),
+                              WeatherInfoCard(
+                                title: "Wind",
+                                image: "assets/windy.png",
+                                metter:
+                                    "${homeController.weatherDataModel.value.current!.windKph} %",
+                              ),
+                              const SizedBox(height: 10),
+                              WeatherInfoCard(
+                                title: "Hum",
+                                image: "assets/hum.png",
+                                metter:
+                                    "${homeController.weatherDataModel.value.current!.humidity} %",
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ],

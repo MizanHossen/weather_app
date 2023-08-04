@@ -6,6 +6,8 @@ import 'package:intl/intl.dart';
 import 'package:weather_app/constants/constant.dart';
 import 'package:weather_app/models/location_data_model.dart';
 
+import '../models/weather_data_model.dart';
+
 class HomeController extends GetxController {
   var num = 1.obs;
 
@@ -28,17 +30,26 @@ class HomeController extends GetxController {
     DateTime date = DateTime.parse(dateString);
 
     // Define the date format you want to use
-    DateFormat formatter = DateFormat('dd MMMM yyyy');
+    DateFormat formatter = DateFormat('dd MMMM ');
 
     // Format the DateTime object into a string
     String formattedDate = formatter.format(date);
     return formattedDate;
   }
 
+  void main() {
+    String dateTimeString = "2023-08-03 00:00";
+    DateTime dateTime = DateTime.parse(dateTimeString);
+    String time =
+        "${dateTime.hour.toString().padLeft(2, '0')}:${dateTime.minute.toString().padLeft(2, '0')}";
+    print(time); // Output: 00:00
+  }
+
   //****************************** Get Data ************************ */
   var locationName = "".obs;
   var isLoading = false.obs;
-  RxObjectMixin<LocationDataModel> locationDataModel = LocationDataModel().obs;
+  RxObjectMixin<WeatherDataModel> weatherDataModel = WeatherDataModel().obs;
+  // RxObjectMixin<LocationDataModel> locationDataModel = LocationDataModel().obs;
 
   void getForcastData() async {
     isLoading.value = true;
@@ -50,41 +61,36 @@ class HomeController extends GetxController {
       double latitude = position.latitude;
       double longitude = position.longitude;
 
-      // print("Latitude: $latitude");
-      // print("Longitude: $longitude");
+      // Obtain the location name based on latitude and longitude
+      String name = await getLocationName(latitude, longitude);
+      locationName.value = name;
 
-      locationName.value = await getLocationName(latitude, longitude);
-      // print("Location Name: $locationName");
-      // print("get current locaiton end");
-
-      // ignore: unnecessary_null_comparison
-      if (locationName != null) {
+      if (locationName.value != null) {
+        // Check the value, not the variable itself
         Dio dio = Dio();
 
         try {
-          // print("Dio called");
-          // print(
-          //     "Main ----------------------------lOcaiton nnnn ${locationName.value}");
           var response = await dio.get(Constants.weatherUrl, queryParameters: {
             "key": "5a2a4bbdb7a1432bae555712233007",
-            //"q": locationName.value.toString(),
             "q": locationName.value,
             "aqi": "no",
+            "days": "7",
+            "alerts": "no"
           });
 
           if (response.statusCode == 200) {
-            // print("HTTP Url: ${response.requestOptions.method}");
-            // print("HTTP Url: ${response.requestOptions.baseUrl}");
-            // print("HTTP Url: ${response.requestOptions.path}");
-            // print("HTTP Status code : ${response.statusCode}");
-            // print("HTTP Status Meggage : ${response.statusMessage}");
-            // // ignore: unused_local_variable
-            //var myData = response.data as List;
+            print("HTTP Url: ${response.requestOptions.method}");
+            print("HTTP Url: ${response.requestOptions.baseUrl}");
+            print("HTTP Url: ${response.requestOptions.path}");
+            print("HTTP Status code : ${response.statusCode}");
+            print("HTTP Status Meggage : ${response.statusMessage}");
+            // ignore: unused_local_variable
+            // var myData = response.data as List;
 
-            locationDataModel.value = LocationDataModel.fromJson(response.data);
+            weatherDataModel.value = WeatherDataModel.fromJson(response.data);
             isLoading.value = false;
 
-            // print(locationDataModel.value.location!.country);
+            print(weatherDataModel.value.forecast!.forecastday.length);
           }
         } catch (e) {
           // ignore: unnecessary_brace_in_string_interps, avoid_print
