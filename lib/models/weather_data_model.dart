@@ -166,15 +166,25 @@ class Condition {
 }
 
 enum Text {
+  // ignore: constant_identifier_names
   CLEAR,
+  // ignore: constant_identifier_names
   CLOUDY,
+  // ignore: constant_identifier_names
   HEAVY_RAIN,
+  // ignore: constant_identifier_names
   LIGHT_RAIN,
+  // ignore: constant_identifier_names
   LIGHT_RAIN_SHOWER,
+  // ignore: constant_identifier_names
   MODERATE_RAIN,
+  // ignore: constant_identifier_names
   OVERCAST,
+  // ignore: constant_identifier_names
   PARTLY_CLOUDY,
+  // ignore: constant_identifier_names
   PATCHY_RAIN_POSSIBLE,
+  // ignore: constant_identifier_names
   SUNNY
 }
 
@@ -191,6 +201,7 @@ final textValues = EnumValues({
   "Sunny": Text.SUNNY
 });
 
+// ignore: constant_identifier_names
 enum WindDir { NNW, NW, S, SSE, SSW, SW, W, WNW, WSW }
 
 final windDirValues = EnumValues({

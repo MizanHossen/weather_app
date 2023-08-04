@@ -1,74 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
-
 import '../../controller/home_controller.dart';
 
 // ignore: must_be_immutable
 class DetailsScreen extends StatelessWidget {
-  DetailsScreen({super.key, this.isSelected});
-  bool? isSelected;
-
-  var cilcious = [
-    "29°C",
-    "32°C",
-    "40°C",
-    "28°C",
-    "29°C",
-    "30°C",
-    "32°C",
-    "37°C",
-  ];
-
-  var img = [
-    "assets/img2.png",
-    "assets/thunder_img.png",
-    "assets/img2.png",
-    "assets/thunder_img.png",
-    "assets/img2.png",
-    "assets/thunder_img.png",
-    "assets/img2.png",
-    "assets/thunder_img.png",
-  ];
-  var img_1 = [
-    "assets/img2.png",
-    "assets/thunder_img.png",
-    "assets/img2.png",
-    "assets/thunder_img.png",
-    "assets/img2.png",
-    "assets/thunder_img.png",
-    "assets/img2.png",
-    "assets/thunder_img.png",
-  ];
-
-  var time = [
-    "12:00",
-    "02:00",
-    "72:00",
-    "12:00",
-    "52:00",
-    "12:00",
-    "12:00",
-    "52:00",
-  ];
-  var date = [
-    "Sep, 13",
-    "Sep, 14",
-    "Sep, 15",
-    "Sep, 16",
-    "Sep, 17",
-    "Sep, 18",
-    "Sep, 19",
-    "Sep, 20",
-  ];
+  const DetailsScreen({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
     final HomeController homeController = Get.put(HomeController());
     // print(
     //     "Length::: ${homeController.weatherDataModel.value.forecast!.forecastday.length}");
+    DateTime now = DateTime.now();
+    int currentHour = now.hour;
+
     return Scaffold(
         body: Obx(
+      // ignore: unrelated_type_equality_checks
       () => homeController.isLoading == true
           ? const Center(
               child: CircularProgressIndicator(),
@@ -95,6 +45,7 @@ class DetailsScreen extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
+                              //****************************************** Header Section *************************************** */
                               InkWell(
                                 onTap: () {
                                   Navigator.pop(context);
@@ -104,7 +55,7 @@ class DetailsScreen extends StatelessWidget {
                                     Icon(
                                       Icons.arrow_back_ios,
                                       color: Colors.white,
-                                      size: 16,
+                                      //  size: 18,
                                     ),
                                     SizedBox(
                                       width: 5,
@@ -130,7 +81,7 @@ class DetailsScreen extends StatelessWidget {
                         ),
                       ),
 
-                      // **********************************************
+                      //****************************************** Today Details Section *************************************** */
                       SizedBox(
                         height: MediaQuery.sizeOf(context).height * 0.25,
                         //flex: 3,
@@ -143,31 +94,33 @@ class DetailsScreen extends StatelessWidget {
                                 children: [
                                   Row(
                                     children: [
-                                      CustomText(
-                                        txt: "Today",
-                                        textColor: Colors.white,
-                                        fs: 30,
-                                        fw: FontWeight.bold,
-                                        lspace: 0.0,
+                                      const Text(
+                                        "Today",
+                                        style: TextStyle(
+                                          fontSize: 24,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white,
+                                        ),
                                       ),
                                       const Spacer(),
-                                      CustomText(
-                                        txt: homeController.formatDate(
-                                            homeController.weatherDataModel
-                                                .value.location!.localtime
-                                                .toString()),
-                                        textColor: Colors.white,
-                                        fs: 25,
-                                        fw: FontWeight.w300,
-                                        lspace: 0.0,
+                                      Text(
+                                        homeController.formatDate(homeController
+                                            .weatherDataModel
+                                            .value
+                                            .location!
+                                            .localtime
+                                            .toString()),
+                                        style: const TextStyle(
+                                          fontSize: 24,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white,
+                                        ),
                                       ),
                                     ],
                                   ),
                                   Expanded(
-                                    //flex: 5,
                                     child: ListView.builder(
                                       scrollDirection: Axis.horizontal,
-                                      //itemCount: img.length,
                                       itemCount: homeController
                                           .weatherDataModel
                                           .value
@@ -183,41 +136,36 @@ class DetailsScreen extends StatelessWidget {
                                             .forecastday[0]
                                             .hour[index];
 
-                                        String? hourInterval = hourItem.time
-                                            .substring(
-                                              (hourItem.time.length) - 5,
-                                            )
-                                            .substring(0, 2);
-
-                                        String dateTimeString = hourItem.time;
                                         DateTime dateTime =
-                                            DateTime.parse(dateTimeString);
-                                        String time =
-                                            "${dateTime.hour.toString().padLeft(2, '0')}:${dateTime.minute.toString().padLeft(2, '0')}";
-                                        print(
-                                            "Length :: ${homeController.weatherDataModel.value.forecast!.forecastday[0].hour.length}");
+                                            DateTime.parse(hourItem.time);
+                                        int hour = dateTime.hour;
+
+                                        bool isCurrentHour =
+                                            currentHour == hour;
 
                                         return Padding(
                                           padding: const EdgeInsets.all(8.0),
                                           child: Container(
-                                            height: 138,
-                                            width: 80,
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 25),
                                             decoration: BoxDecoration(
-                                              color:
-                                                  Colors.white.withOpacity(0.3),
+                                              color: isCurrentHour
+                                                  ? Colors.blue
+                                                  : Colors.white
+                                                      .withOpacity(0.3),
                                               borderRadius:
                                                   BorderRadius.circular(15.0),
-                                              // border: Border.all(
-                                              //   width: 1,
-                                              //   color: Colors.white,
-                                              // ),
+                                              border: Border.all(
+                                                width: 1,
+                                                color: Colors.white,
+                                              ),
                                             ),
                                             child: Column(
                                               mainAxisAlignment:
                                                   MainAxisAlignment.spaceEvenly,
                                               children: [
                                                 Text(
-                                                  hourItem.tempC.toString(),
+                                                  "${hourItem.tempC}°C",
                                                   style: const TextStyle(
                                                     fontWeight: FontWeight.w200,
                                                     color: Colors.white,
@@ -225,17 +173,13 @@ class DetailsScreen extends StatelessWidget {
                                                   ),
                                                 ),
                                                 Image.network(
-                                                  "Http:" +
-                                                      hourItem.condition.icon
-                                                          .toString(),
+                                                  "Http:${hourItem.condition.icon}",
                                                   height: 40,
                                                 ),
                                                 Text(
                                                   hourItem.time.substring(
-                                                          (hourItem.time
-                                                                  .length) -
-                                                              5) ??
-                                                      "",
+                                                      (hourItem.time.length) -
+                                                          5),
                                                   style: const TextStyle(
                                                     fontWeight: FontWeight.w200,
                                                     color: Colors.white,
@@ -255,25 +199,27 @@ class DetailsScreen extends StatelessWidget {
                           ),
                         ),
                       ),
-                      // **********************************************
+
+                      //****************************************** 7days Details Section *************************************** */
 
                       Column(
                         children: [
-                          Padding(
-                            padding: const EdgeInsets.all(12.0),
+                          const Padding(
+                            padding: EdgeInsets.all(12.0),
                             child: SizedBox(
                               width: double.infinity,
                               child: Row(
                                 children: [
-                                  CustomText(
-                                    txt: "Next Forecast",
-                                    textColor: Colors.white,
-                                    fs: 22,
-                                    fw: FontWeight.bold,
-                                    lspace: 0.0,
+                                  Text(
+                                    "New Forcast",
+                                    style: TextStyle(
+                                      fontSize: 24,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white,
+                                    ),
                                   ),
-                                  const Spacer(),
-                                  const Icon(
+                                  Spacer(),
+                                  Icon(
                                     Icons.calendar_month,
                                     color: Colors.white,
                                   ),
@@ -292,13 +238,15 @@ class DetailsScreen extends StatelessWidget {
                               return index != 0
                                   ? ListTile(
                                       leading: Text(
-                                        homeController.formatDate(homeController
-                                            .weatherDataModel
-                                            .value
-                                            .forecast!
-                                            .forecastday[index]
-                                            .date
-                                            .toString()),
+                                        homeController
+                                            .formatDate(homeController
+                                                .weatherDataModel
+                                                .value
+                                                .forecast!
+                                                .forecastday[index]
+                                                .date
+                                                .toString())
+                                            .substring(0, 6),
                                         //date[index],
                                         style: const TextStyle(
                                           fontWeight: FontWeight.w200,
@@ -307,27 +255,11 @@ class DetailsScreen extends StatelessWidget {
                                         ),
                                       ),
                                       title: Image.network(
-                                        "Http:" +
-                                            homeController
-                                                .weatherDataModel
-                                                .value
-                                                .forecast!
-                                                .forecastday[index]
-                                                .day
-                                                .condition
-                                                .icon
-                                                .toString(),
+                                        "Http:${homeController.weatherDataModel.value.forecast!.forecastday[index].day.condition.icon}",
                                         height: 40,
                                       ),
                                       trailing: Text(
-                                        homeController
-                                            .weatherDataModel
-                                            .value
-                                            .forecast!
-                                            .forecastday[index]
-                                            .day
-                                            .maxtempC
-                                            .toString(),
+                                        "${homeController.weatherDataModel.value.forecast!.forecastday[index].day.maxtempC}°C",
                                         style: const TextStyle(
                                           fontWeight: FontWeight.w200,
                                           color: Colors.white,
@@ -346,36 +278,5 @@ class DetailsScreen extends StatelessWidget {
               ),
             ),
     ));
-  }
-}
-
-// ignore: must_be_immutable
-class CustomText extends StatelessWidget {
-  CustomText({
-    super.key,
-    required this.txt,
-    required this.textColor,
-    required this.fs,
-    required this.fw,
-    required this.lspace,
-  });
-
-  String txt;
-  Color textColor;
-  double fs;
-  FontWeight fw;
-  double lspace;
-
-  @override
-  Widget build(BuildContext context) {
-    return Text(
-      txt,
-      style: GoogleFonts.dmSans(
-        color: textColor,
-        fontSize: fs,
-        fontWeight: fw,
-        letterSpacing: lspace,
-      ),
-    );
   }
 }

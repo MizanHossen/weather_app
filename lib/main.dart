@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:weather_app/view/detials/details_screen.dart';
+
 import 'package:weather_app/view/home/home_screen.dart';
 
 void main() {
@@ -18,10 +18,10 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Weather App',
       theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
           useMaterial3: true,
           fontFamily: GoogleFonts.overpass().fontFamily),
-      home: HomeScreen(),
+      home: const HomeScreen(),
     );
   }
 }

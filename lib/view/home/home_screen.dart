@@ -36,6 +36,7 @@ class HomeScreen extends StatelessWidget {
                       const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
                   child: Column(
                     children: [
+                      //************************************************* Header Section *************************** */
                       Row(
                         children: [
                           Image.asset("assets/map.png", height: 30),
@@ -55,12 +56,24 @@ class HomeScreen extends StatelessWidget {
                           Image.asset("assets/notification.png", height: 30),
                         ],
                       ),
-                      const SizedBox(height: 50),
+                      const Spacer(),
 
-                      Image.asset("assets/img2.png"),
+                      Container(
+                        height: 100,
+                        decoration: BoxDecoration(
+                          //color: Colors.red,
+                          image: DecorationImage(
+                            image: NetworkImage(
+                                "Https:${homeController.weatherDataModel.value.current!.condition.icon}"),
+                            fit: BoxFit.contain,
+                          ),
+                        ),
+                      ),
                       // Image.network(
-                      //     "${homeController.locationDataModel.value.current!.condition.icon}"),
-                      const SizedBox(height: 40),
+                      //   "Https:${homeController.weatherDataModel.value.current!.condition.icon}",
+                      //   height: 200,
+                      // ),
+                      const SizedBox(height: 30),
 
                       //*************************************** Weather Info************************** */
                       InkWell(
@@ -68,7 +81,7 @@ class HomeScreen extends StatelessWidget {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => DetailsScreen(),
+                                builder: (context) => const DetailsScreen(),
                               ));
                         },
                         child: Container(
@@ -150,6 +163,8 @@ class HomeScreen extends StatelessWidget {
                           ),
                         ),
                       ),
+                      const SizedBox(height: 80),
+                      const Spacer(),
                     ],
                   ),
                 ),
