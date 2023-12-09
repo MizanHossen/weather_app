@@ -4,8 +4,6 @@ import 'package:get/get.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:intl/intl.dart';
 import 'package:weather_app/constants/constant.dart';
-import 'package:weather_app/models/location_data_model.dart';
-
 import '../models/weather_data_model.dart';
 
 class HomeController extends GetxController {
@@ -20,6 +18,7 @@ class HomeController extends GetxController {
     // getRequest();
     // getCurrentLocation();
     getCurrentLocation();
+    // getCurrentLocation();
 
     getForcastData();
   }
@@ -42,7 +41,7 @@ class HomeController extends GetxController {
     DateTime dateTime = DateTime.parse(dateTimeString);
     String time =
         "${dateTime.hour.toString().padLeft(2, '0')}:${dateTime.minute.toString().padLeft(2, '0')}";
-    print(time); // Output: 00:00
+    // print(time); // Output: 00:00
   }
 
   //****************************** Get Data ************************ */
@@ -65,6 +64,7 @@ class HomeController extends GetxController {
       String name = await getLocationName(latitude, longitude);
       locationName.value = name;
 
+      // ignore: unnecessary_null_comparison
       if (locationName.value != null) {
         // Check the value, not the variable itself
         Dio dio = Dio();
@@ -86,11 +86,12 @@ class HomeController extends GetxController {
             print("HTTP Status Meggage : ${response.statusMessage}");
             // ignore: unused_local_variable
             // var myData = response.data as List;
+            print(response.data);
 
             weatherDataModel.value = WeatherDataModel.fromJson(response.data);
             isLoading.value = false;
 
-            print(weatherDataModel.value.forecast!.forecastday.length);
+            print(weatherDataModel.value.forecast!.forecastday!.length);
           }
         } catch (e) {
           // ignore: unnecessary_brace_in_string_interps, avoid_print
@@ -108,39 +109,88 @@ class HomeController extends GetxController {
 
   //************************* Get current location********************* */
 
-  getCurrentLocation() async {
+  // getCurrentLocation() async {
+  //   await Geolocator.requestPermission();
+  //   //  await Geolocator.openAppSettings();
+  //   //await Geolocator.openLocationSettings();
+  //   // ignore: unused_element, no_leading_underscores_for_local_identifiers
+  //   Future<Position> _determinePosition() async {
+  //     bool serviceEnabled;
+  //     LocationPermission permission;
+
+  //     // Test if location services are enabled.
+  //     serviceEnabled = await Geolocator.isLocationServiceEnabled();
+  //     if (!serviceEnabled) {
+  //       return Future.error('Location services are disabled.');
+  //     }
+
+  //     permission = await Geolocator.checkPermission();
+  //     if (permission == LocationPermission.denied) {
+  //       permission = await Geolocator.requestPermission();
+  //       if (permission == LocationPermission.denied) {
+  //         return Future.error('Location permissions are denied');
+  //       }
+  //     }
+
+  //     if (permission == LocationPermission.deniedForever) {
+  //       return Future.error(
+  //           'Location permissions are permanently denied, we cannot request permissions.');
+  //     }
+
+  //     // When we reach here, permissions are granted and we can
+
+  //     return await Geolocator.getCurrentPosition();
+  //   }
+  // }
+
+  ///////////////////////////////
+  //   @override
+  // void onInit() {
+  //   super.onInit();
+  //   getCurrentLocation();
+  // }
+
+  Future<void> getCurrentLocation() async {
     await Geolocator.requestPermission();
-    //  await Geolocator.openAppSettings();
-    //await Geolocator.openLocationSettings();
-    // ignore: unused_element, no_leading_underscores_for_local_identifiers
-    Future<Position> _determinePosition() async {
-      bool serviceEnabled;
-      LocationPermission permission;
-
-      // Test if location services are enabled.
-      serviceEnabled = await Geolocator.isLocationServiceEnabled();
-      if (!serviceEnabled) {
-        return Future.error('Location services are disabled.');
+    try {
+      Position? position = await _determinePosition();
+      if (position != null) {
+        getForcastData();
+      } else {
+        // Handle if position is null (possibly due to permission denied or other issues)
       }
-
-      permission = await Geolocator.checkPermission();
-      if (permission == LocationPermission.denied) {
-        permission = await Geolocator.requestPermission();
-        if (permission == LocationPermission.denied) {
-          return Future.error('Location permissions are denied');
-        }
-      }
-
-      if (permission == LocationPermission.deniedForever) {
-        return Future.error(
-            'Location permissions are permanently denied, we cannot request permissions.');
-      }
-
-      // When we reach here, permissions are granted and we can
-
-      return await Geolocator.getCurrentPosition();
+    } catch (e) {
+      print('Error getting current location: $e');
+      // Handle error accordingly
     }
   }
+
+  Future<Position?> _determinePosition() async {
+    bool serviceEnabled;
+    LocationPermission permission;
+
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      return null; // Location services are disabled
+    }
+
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        return null; // Handle when permission is denied
+      }
+    }
+
+    if (permission == LocationPermission.deniedForever) {
+      return null; // Handle when permission is permanently denied
+    }
+
+    return await Geolocator.getCurrentPosition();
+  }
+
+  ///
+  ////////////////////////////
 
   ////************************ Get location name***************** */
 

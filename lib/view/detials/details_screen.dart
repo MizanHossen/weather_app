@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-
 import '../../controller/home_controller.dart';
 
 // ignore: must_be_immutable
@@ -172,31 +171,27 @@ class DetailsScreen extends StatelessWidget {
                                           .weatherDataModel
                                           .value
                                           .forecast!
-                                          .forecastday[0]
-                                          .hour
+                                          .forecastday![0]
+                                          .hour!
                                           .length,
                                       itemBuilder: (context, index) {
                                         var hourItem = homeController
                                             .weatherDataModel
                                             .value
                                             .forecast!
-                                            .forecastday[0]
-                                            .hour[index];
+                                            .forecastday![0]
+                                            .hour![index];
 
-                                        String? hourInterval = hourItem.time
-                                            .substring(
-                                              (hourItem.time.length) - 5,
-                                            )
-                                            .substring(0, 2);
-
-                                        String dateTimeString = hourItem.time;
+                                        String dateTimeString = hourItem.time!;
                                         DateTime dateTime =
                                             DateTime.parse(dateTimeString);
                                         String time =
                                             "${dateTime.hour.toString().padLeft(2, '0')}:${dateTime.minute.toString().padLeft(2, '0')}";
                                         print(
-                                            "Length :: ${homeController.weatherDataModel.value.forecast!.forecastday[0].hour.length}");
+                                            "Length :: ${homeController.weatherDataModel.value.forecast!.forecastday![0].hour!.length}");
 
+                                        print(
+                                            "Https:${hourItem.condition!.icon}---------------------");
                                         return Padding(
                                           padding: const EdgeInsets.all(8.0),
                                           child: Container(
@@ -225,14 +220,12 @@ class DetailsScreen extends StatelessWidget {
                                                   ),
                                                 ),
                                                 Image.network(
-                                                  "Http:" +
-                                                      hourItem.condition.icon
-                                                          .toString(),
+                                                  "Https:${hourItem.condition!.icon}",
                                                   height: 40,
                                                 ),
                                                 Text(
-                                                  hourItem.time.substring(
-                                                          (hourItem.time
+                                                  hourItem.time!.substring(
+                                                          (hourItem.time!
                                                                   .length) -
                                                               5) ??
                                                       "",
@@ -287,7 +280,7 @@ class DetailsScreen extends StatelessWidget {
                             physics: const NeverScrollableScrollPhysics(),
                             //itemCount: cilcious.length,
                             itemCount: homeController.weatherDataModel.value
-                                .forecast!.forecastday.length,
+                                .forecast!.forecastday!.length,
                             itemBuilder: (_, index) {
                               return index != 0
                                   ? ListTile(
@@ -296,7 +289,7 @@ class DetailsScreen extends StatelessWidget {
                                             .weatherDataModel
                                             .value
                                             .forecast!
-                                            .forecastday[index]
+                                            .forecastday![index]
                                             .date
                                             .toString()),
                                         //date[index],
@@ -307,16 +300,7 @@ class DetailsScreen extends StatelessWidget {
                                         ),
                                       ),
                                       title: Image.network(
-                                        "Http:" +
-                                            homeController
-                                                .weatherDataModel
-                                                .value
-                                                .forecast!
-                                                .forecastday[index]
-                                                .day
-                                                .condition
-                                                .icon
-                                                .toString(),
+                                        "Https:${homeController.weatherDataModel.value.forecast!.forecastday![index].day!.condition!.icon}",
                                         height: 40,
                                       ),
                                       trailing: Text(
@@ -324,8 +308,8 @@ class DetailsScreen extends StatelessWidget {
                                             .weatherDataModel
                                             .value
                                             .forecast!
-                                            .forecastday[index]
-                                            .day
+                                            .forecastday![index]
+                                            .day!
                                             .maxtempC
                                             .toString(),
                                         style: const TextStyle(

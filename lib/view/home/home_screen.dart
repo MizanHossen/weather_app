@@ -124,7 +124,7 @@ class HomeScreen extends StatelessWidget {
                               ),
                               Text(
                                 homeController.weatherDataModel.value.current!
-                                    .condition.text
+                                    .condition!.text
                                     .toString(),
                                 style: const TextStyle(
                                   fontSize: 24,
