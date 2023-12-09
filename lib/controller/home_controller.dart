@@ -11,6 +11,8 @@ class HomeController extends GetxController {
 
   Position? position;
 
+  var isAccessLocation = false.obs;
+
   @override
   void onInit() {
     super.onInit();
@@ -153,8 +155,11 @@ class HomeController extends GetxController {
     try {
       Position? position = await _determinePosition();
       if (position != null) {
+        isAccessLocation.value = false;
         getForcastData();
       } else {
+        isAccessLocation.value = true;
+
         // Handle if position is null (possibly due to permission denied or other issues)
       }
     } catch (e) {

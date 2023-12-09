@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:weather_app/constants/Loading.dart';
 import 'package:weather_app/controller/home_controller.dart';
 import 'package:weather_app/view/detials/details_screen.dart';
 
@@ -15,28 +16,43 @@ class HomeScreen extends StatelessWidget {
     final size = MediaQuery.sizeOf(context);
     //  String time = ;
     return Scaffold(
-        backgroundColor: Colors.transparent,
+        //backgroundColor: Colors.transparent,
         body: Obx(
-          // ignore: unrelated_type_equality_checks
-          () => homeController.isLoading == true
-              ? const Center(
-                  child: CircularProgressIndicator(),
-                )
+      // ignore: unrelated_type_equality_checks
+      () => homeController.isAccessLocation == true
+          ? Center(
+              child: InkWell(
+                onTap: () {
+                  homeController.getCurrentLocation();
+                },
+                child: const Text(
+                  "Allow access to your location",
+                  style: TextStyle(
+                    decoration: TextDecoration.underline,
+                    height: 5,
+                    //fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            )
+          : homeController.isLoading == true
+              ? const Loading()
               : Container(
                   padding:
                       EdgeInsets.only(top: MediaQuery.paddingOf(context).top),
                   height: MediaQuery.sizeOf(context).height,
                   width: MediaQuery.sizeOf(context).width,
                   decoration: const BoxDecoration(
-                    color: Colors.transparent,
+                    //color: Colors.blueAccent,
                     image: DecorationImage(
                       image: AssetImage("assets/home_bg.png"),
                       fit: BoxFit.cover,
                     ),
                   ),
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 20, vertical: 30),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 20, vertical: 30)
+                            .copyWith(bottom: 10),
                     child: Column(
                       children: [
                         Row(
@@ -157,11 +173,30 @@ class HomeScreen extends StatelessWidget {
                             ),
                           ),
                         ),
+                        Spacer(),
+
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "This app is developed by",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 12),
+                            ),
+                            SizedBox(width: 15),
+                            Image.asset(
+                              "assets/orioca_logo.png",
+                              height: 30,
+                            ),
+                          ],
+                        ),
                       ],
                     ),
                   ),
                 ),
-        ));
+    ));
   }
 }
 
