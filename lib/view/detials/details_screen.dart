@@ -68,6 +68,7 @@ class DetailsScreen extends StatelessWidget {
     //     "Length::: ${homeController.weatherDataModel.value.forecast!.forecastday.length}");
     return Scaffold(
         body: Obx(
+      // ignore: unrelated_type_equality_checks
       () => homeController.isLoading == true
           ? const Center(
               child: CircularProgressIndicator(),
@@ -185,11 +186,14 @@ class DetailsScreen extends StatelessWidget {
                                         String dateTimeString = hourItem.time!;
                                         DateTime dateTime =
                                             DateTime.parse(dateTimeString);
+                                        // ignore: unused_local_variable
                                         String time =
                                             "${dateTime.hour.toString().padLeft(2, '0')}:${dateTime.minute.toString().padLeft(2, '0')}";
+                                        // ignore: avoid_print
                                         print(
                                             "Length :: ${homeController.weatherDataModel.value.forecast!.forecastday![0].hour!.length}");
 
+                                        // ignore: avoid_print
                                         print(
                                             "Https:${hourItem.condition!.icon}---------------------");
                                         return Padding(
@@ -225,10 +229,8 @@ class DetailsScreen extends StatelessWidget {
                                                 ),
                                                 Text(
                                                   hourItem.time!.substring(
-                                                          (hourItem.time!
-                                                                  .length) -
-                                                              5) ??
-                                                      "",
+                                                      (hourItem.time!.length) -
+                                                          5),
                                                   style: const TextStyle(
                                                     fontWeight: FontWeight.w200,
                                                     color: Colors.white,

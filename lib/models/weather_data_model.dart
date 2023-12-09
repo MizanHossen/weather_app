@@ -171,9 +171,13 @@ class Condition {
 }
 
 enum Icon {
+  // ignore: constant_identifier_names
   CDN_WEATHERAPI_COM_WEATHER_64_X64_DAY_113_PNG,
+  // ignore: constant_identifier_names
   CDN_WEATHERAPI_COM_WEATHER_64_X64_DAY_116_PNG,
+  // ignore: constant_identifier_names
   CDN_WEATHERAPI_COM_WEATHER_64_X64_NIGHT_113_PNG,
+  // ignore: constant_identifier_names
   CDN_WEATHERAPI_COM_WEATHER_64_X64_NIGHT_116_PNG
 }
 
@@ -188,6 +192,7 @@ final iconValues = EnumValues({
       Icon.CDN_WEATHERAPI_COM_WEATHER_64_X64_NIGHT_116_PNG
 });
 
+// ignore: constant_identifier_names
 enum Text { CLEAR, PARTLY_CLOUDY, SUNNY }
 
 final textValues = EnumValues({
@@ -196,6 +201,7 @@ final textValues = EnumValues({
   "Sunny": Text.SUNNY
 });
 
+// ignore: constant_identifier_names
 enum WindDir { N, NNW, NW, WNW, WSW }
 
 final windDirValues = EnumValues({

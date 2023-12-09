@@ -39,6 +39,7 @@ class HomeController extends GetxController {
   void main() {
     String dateTimeString = "2023-08-03 00:00";
     DateTime dateTime = DateTime.parse(dateTimeString);
+    // ignore: unused_local_variable
     String time =
         "${dateTime.hour.toString().padLeft(2, '0')}:${dateTime.minute.toString().padLeft(2, '0')}";
     // print(time); // Output: 00:00
@@ -79,23 +80,20 @@ class HomeController extends GetxController {
           });
 
           if (response.statusCode == 200) {
-            print("HTTP Url: ${response.requestOptions.method}");
-            print("HTTP Url: ${response.requestOptions.baseUrl}");
-            print("HTTP Url: ${response.requestOptions.path}");
-            print("HTTP Status code : ${response.statusCode}");
-            print("HTTP Status Meggage : ${response.statusMessage}");
+            // print("HTTP Url: ${response.requestOptions.method}");
+            // print("HTTP Url: ${response.requestOptions.baseUrl}");
+            // print("HTTP Url: ${response.requestOptions.path}");
+            // print("HTTP Status code : ${response.statusCode}");
+            // print("HTTP Status Meggage : ${response.statusMessage}");
             // ignore: unused_local_variable
             // var myData = response.data as List;
-            print(response.data);
 
             weatherDataModel.value = WeatherDataModel.fromJson(response.data);
             isLoading.value = false;
-
-            print(weatherDataModel.value.forecast!.forecastday!.length);
           }
         } catch (e) {
           // ignore: unnecessary_brace_in_string_interps, avoid_print
-          print("errorrrrrrreeeeeeee ${e}");
+          print("errorreeeee ${e}");
         }
       } else {
         // ignore: avoid_print
@@ -160,6 +158,7 @@ class HomeController extends GetxController {
         // Handle if position is null (possibly due to permission denied or other issues)
       }
     } catch (e) {
+      // ignore: avoid_print
       print('Error getting current location: $e');
       // Handle error accordingly
     }
