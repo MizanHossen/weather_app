@@ -82,11 +82,11 @@ class HomeController extends GetxController {
           });
 
           if (response.statusCode == 200) {
-            // print("HTTP Url: ${response.requestOptions.method}");
-            // print("HTTP Url: ${response.requestOptions.baseUrl}");
-            // print("HTTP Url: ${response.requestOptions.path}");
-            // print("HTTP Status code : ${response.statusCode}");
-            // print("HTTP Status Meggage : ${response.statusMessage}");
+            print("HTTP Url: ${response.requestOptions.method}");
+            print("HTTP Url: ${response.requestOptions.baseUrl}");
+            print("HTTP Url: ${response.requestOptions.path}");
+            print("HTTP Status code : ${response.statusCode}");
+            print("HTTP Status Meggage : ${response.statusMessage}");
             // ignore: unused_local_variable
             // var myData = response.data as List;
 

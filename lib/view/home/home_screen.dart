@@ -173,25 +173,27 @@ class HomeScreen extends StatelessWidget {
                             ),
                           ),
                         ),
-                        Spacer(),
+                        const Spacer(),
 
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              "This app is developed by",
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 12),
-                            ),
-                            SizedBox(width: 15),
-                            Image.asset(
-                              "assets/orioca_logo.png",
-                              height: 30,
-                            ),
-                          ],
-                        ),
+                        Container(),
+
+                        // Row(
+                        //   mainAxisAlignment: MainAxisAlignment.center,
+                        //   children: [
+                        //     Text(
+                        //       "This app is developed by",
+                        //       style: TextStyle(
+                        //           color: Colors.white,
+                        //           fontWeight: FontWeight.bold,
+                        //           fontSize: 12),
+                        //     ),
+                        //     SizedBox(width: 15),
+                        //     Image.asset(
+                        //       "assets/orioca_logo.png",
+                        //       height: 30,
+                        //     ),
+                        //   ],
+                        // ),
                       ],
                     ),
                   ),
